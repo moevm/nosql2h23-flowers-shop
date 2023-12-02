@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
+
+:root {
+    --font-base: 'Didact Gothic', sans-serif;
+
+    --color-background: #FFF6F6;
+    --color-accent-pink: #CD4E5E;
+    --color-navbar: #F6E0E0;
+    --color-footer: #E0B6B6;
+    --color-middle-text: #706C6C;
+    --color-dark-text: #3E3E3E;
+    --color-light-text: #9F9F9F;
+    --color-white: #FFFFFF;
+    --color-shadow: #5C5C5C;
+
+    --gradient-header: linear-gradient(95deg, #D2A6A6 -0.49%, #E0B7B7 47.89%, #F1D5D5 92.85%);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-background);
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+.section_title {
+    font-family: var(--font-base);
+    color: var(--color-accent-pink);
+    font-size: 32px;
+    text-align: center;
+    text-transform: uppercase;
+    padding-bottom: 20px;
+}
+
+.app_button {
+    color: var(--color-white);
+    text-align: center;
+    font-family: var(--font-base);
+    font-size: 24px;
+    padding: 18px 50px;
+    border-radius: 15px;
+    background: var(--color-accent-pink);
+    cursor: pointer;
+}
