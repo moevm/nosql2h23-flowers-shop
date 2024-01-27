@@ -1,5 +1,5 @@
 <template>
-    <div className="catalog">
+    <div v-if="flowers" className="catalog">
             <h2 className="section_title">
                 Каталог
             </h2>
@@ -13,53 +13,26 @@
             <div className="catalog__items">
                 <img 
                     class="catalog__item"
-                    v-for="image in images" 
-                    :key="image.id" 
-                    :src="image.path"
+                    v-for="flower in flowers" 
+                    :key="flower.id" 
+                    :src="flower.image"
                 />
             </div>
         </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue';
+import { useFlowersStore } from '../store/index';
 
 let searchValue = ref("");
+const store = useFlowersStore();
+const flowers = store.flowers;
 
-const images = [
-    {
-        id: 1,
-        path: "/images/slider1.jpg"
-    },
-    {
-        id: 2,
-        path: "/images/slider2.jpg"
-    },
-    {
-        id: 3,
-        path: "/images/slider3.jpg"
-    },
-    {
-        id: 4,
-        path: "/images/slider4.jpg"
-    },
-    {
-        id: 5,
-        path: "/images/slider1.jpg"
-    },
-    {
-        id: 6,
-        path: "/images/slider2.jpg"
-    },
-    {
-        id: 7,
-        path: "/images/slider3.jpg"
-    },
-    {
-        id: 8,
-        path: "/images/slider4.jpg"
-    }
-]
+onMounted(() => {
+    // store.loadData();
+})
+
 </script>
 
 <style lang="scss" scoped>
