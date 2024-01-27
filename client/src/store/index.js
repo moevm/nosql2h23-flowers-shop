@@ -61,7 +61,7 @@ export const useFlowersStore = defineStore('FlowersStore', () => {
             axios.post(`${url}/orders`);
         }
         catch {
-            alert('Не удалось составить заказ')ж
+            alert('Не удалось составить заказ');
         }
     }
 
