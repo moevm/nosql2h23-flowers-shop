@@ -14,6 +14,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
     h1 {
         color: var(--color-white);
         text-align: center;
