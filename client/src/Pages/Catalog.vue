@@ -13,7 +13,7 @@
             <div className="catalog__items">
                 <img 
                     class="catalog__item"
-                    v-for="flower in flowers" 
+                    v-for="flower in searchFlowers()" 
                     :key="flower.id" 
                     :src="flower.image"
                 />
@@ -32,6 +32,12 @@ const flowers = store.flowers;
 onMounted(() => {
     // store.loadData();
 })
+
+const searchFlowers = () => {
+    return flowers.filter((flower) =>
+        flower.name.toLowerCase().includes(searchValue.value.toLowerCase()));
+}
+
 
 </script>
 

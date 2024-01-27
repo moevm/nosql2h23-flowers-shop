@@ -16,7 +16,7 @@ export const useFlowersStore = defineStore('FlowersStore', () => {
         },
         {
             id: 2,
-            name: 'букет цветочков',
+            name: 'розы',
             price: 2300,
             image: '/images/slider1.jpg',
             shelf_life: '',
@@ -25,7 +25,7 @@ export const useFlowersStore = defineStore('FlowersStore', () => {
         },
         {
             id: 3,
-            name: 'букет цветочков',
+            name: 'гортензии',
             price: 2300,
             image: '/images/slider1.jpg',
             shelf_life: '',
