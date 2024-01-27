@@ -11,12 +11,23 @@
             >
 
             <div className="catalog__items">
-                <img 
-                    class="catalog__item"
+                <div 
                     v-for="flower in searchFlowers()" 
                     :key="flower.id" 
-                    :src="flower.image"
-                />
+                >
+                    <router-link
+                        :to="{
+                            name: 'flower',
+                            path: '/catalog/' + flower.id,
+                            params: { id: flower.id }
+                        }">
+                    >
+                        <img 
+                            class="catalog__item"
+                            :src="flower.image"
+                        />
+                    </router-link>
+                </div>
             </div>
         </div>
 </template>

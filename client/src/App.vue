@@ -13,6 +13,6 @@ import Footer from './components/Footer.vue'
 
 <style scoped>
 .app {
-    min-height: 69vh;
+    min-height: 70vh;
 }
 </style>
