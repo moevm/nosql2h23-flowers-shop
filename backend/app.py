@@ -1,9 +1,7 @@
 from flask import Flask, json, render_template, request
 from flask_cors import CORS
-from neo4j import GraphDatabase
+from data.db_session import db_auth
 import datetime
-
-driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "my_password"))
 
 
 # instantiate the app
@@ -12,6 +10,16 @@ app = Flask(__name__)
 # enable CORS
 CORS(app, resources={r"/*":{'origins':"*"}})
 
+driver = db_auth("bolt://localhost:7687", "neo4j", "my_password")
+
+def get_last_id(label):
+    with driver.session() as session:
+        query = """MATCH (n) WHERE $label in labels(n) RETURN MAX(n.id) AS ID;"""
+        map={"label": label}
+
+        results=session.run(query, map)
+        data = [data['ID'] for data in results.data()]
+        return data[0]
 
 #просмотр каталога
 @app.route("/catalog", methods=["GET"])
@@ -45,6 +53,7 @@ def get_warehouse(user_id):
 @app.route("/<int:user_id>/warehouse/addProduct", methods=["GET", "POST"])
 def addProduct(user_id):
     with driver.session() as session:
+        product_id = 1 + get_last_id('Product')
         data = request.get_json()
 
         query = """
@@ -53,7 +62,7 @@ def addProduct(user_id):
             price: toFloat($price), shelf_life: Date($shelf_life), description: $description, amount: toInteger($amount)});
         """
 
-        map={"user_id": user_id, "product_id": data.get('product_id'), "name": data.get('name'), "image": data.get('image'),\
+        map={"user_id": user_id, "product_id": product_id, "name": data.get('name'), "image": data.get('image'),\
             "price": data.get('price'), "shelf_life": data.get('shelf_life'), "description": data.get('dedscription'), "amount": data.get('amount')}
 
         response = {}
@@ -85,7 +94,7 @@ def get_cart(user_id):
 @app.route('/<int:user_id>/changeOrder', methods=["GET", "POST"])
 def change_order(user_id):
     with driver.session() as session: 
-        response = {'status':'success'}
+        order_id = 1 + get_last_id('Order')
         data = request.get_json()
 
         change_order_query = """
@@ -99,12 +108,12 @@ def change_order(user_id):
         """
 
         change_cost_query = """
-        MATCH (o:Order {id: $order_id})-[:IS_CREATED_BY]->(m), (n)-[r:IS_CONTAINED_IN]->(o)
+        MATCH (o:Order {status: 'Оформляется'})-[:IS_CREATED_BY]->(m), (n)-[r:IS_CONTAINED_IN]->(o)
         WITH o, sum(r.cost) AS sum_cost
         SET o.cost = sum_cost;
         """
 
-        map={"user_id": user_id, "product_id": data.get('product_id'), "order_id": data.get('order_id'), "date": datetime.date.today().strftime("%Y-%m-%d")}
+        map={"user_id": user_id, "product_id": data.get('product_id'), "order_id": order_id, "date": datetime.date.today().strftime("%Y-%m-%d")}
         
         response = {}
         try:
