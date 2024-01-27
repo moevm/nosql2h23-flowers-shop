@@ -32,6 +32,10 @@ li {
     list-style: none;
 }
 
+a {
+    text-decoration: none;
+}
+
 .section_title {
     font-family: var(--font-base);
     color: var(--color-accent-pink);
@@ -50,4 +54,19 @@ li {
     border-radius: 15px;
     background: var(--color-accent-pink);
     cursor: pointer;
+}
+
+.divider {
+    height: 1px;
+    width: 556px;
+    background-color: var(--color-light-text);
+}
+
+.inputStyled {
+    height: 50px;
+    border-radius: 10px;
+    border: 2px solid var(--color-dark-text);
+    box-sizing: border-box;
+    color: var(--color-dark-text);
+    font-size: 22px;
 }

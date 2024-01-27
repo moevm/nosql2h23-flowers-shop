@@ -5,7 +5,7 @@
             </h2>
 
             <input 
-                class="catalog__search"
+                class="catalog__search inputStyled"
                 placeholder="Гортензии"
                 v-model="searchValue"
             >
@@ -64,6 +64,7 @@ const images = [
 
 <style lang="scss" scoped>
     .catalog {
+        padding: 0 8rem;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -71,12 +72,6 @@ const images = [
 
         &__search {
             width: 600px;
-            height: 50px;
-            border-radius: 10px;
-            border: 2px solid var(--color-dark-text);
-            box-sizing: border-box;
-            color: var(--color-dark-text);
-            font-size: 22px;
         }
 
         &__items {

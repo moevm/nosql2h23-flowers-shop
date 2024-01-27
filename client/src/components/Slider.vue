@@ -12,7 +12,9 @@
         </swiper>
     </div>
     <div className="slider__button">
-        <button className="app_button">Перейти в каталог</button>
+        <router-link :to="{ name: 'catalog' }">
+            <button className="app_button">Перейти в каталог</button>
+        </router-link>
     </div>
 </template>
 

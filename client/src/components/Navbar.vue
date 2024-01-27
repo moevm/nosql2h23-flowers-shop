@@ -4,14 +4,23 @@
             <img src="/logo.svg" alt="logo"/>
         </div>
         <ul className="navbar__links">
-            <li>Главная</li>
-            <li>Каталог</li>
+            <router-link :to="{ name: 'main' }">
+                <li>Главная</li>
+            </router-link>
+
+            <router-link :to="{ name: 'catalog' }">
+                <li>Каталог</li>
+            </router-link>
+
             <li>Контакты</li>
             <li>О компании</li>
         </ul>
 
         <div className="navbar__icons">
-            <img src="/icons/cart.svg"/>
+            <router-link :to="{ name: 'cart' }">
+                <img src="/icons/cart.svg"/>
+            </router-link>
+        
             <span>Войти</span>
         </div>
 
@@ -37,10 +46,10 @@ import { ref } from 'vue'
 
 let smallscreen = ref(false);
 
-function onClickMenu() {
-    console.log(smallscreen);
-    smallscreen = !smallscreen;
-}
+// function onClickMenu() {
+//     console.log(smallscreen);
+//     smallscreen = !smallscreen;
+// }
 
 </script>
 
@@ -50,6 +59,8 @@ function onClickMenu() {
 @mixin li_pink {
     cursor: pointer;
     transition: color 0.2s ease-in, border-bottom 0.2s ease-in, transform 0.2s ease-in;
+    color: var(--color-dark-text);
+    
     &:hover {
         color: var(--color-accent-pink);
         border-bottom: 1px solid var(--color-accent-pink);

@@ -48,7 +48,8 @@ const reviews = [{
     &__cards {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: center;
+        gap: 1rem;
     }
 }
 </style>
