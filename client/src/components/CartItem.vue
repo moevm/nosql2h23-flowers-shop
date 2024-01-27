@@ -1,6 +1,9 @@
 <template>
     <div className="cartItem">
-        <div className="cartItem__header">
+        <!--! Добавить цикл для товаров из корзины -->
+        <div 
+            className="cartItem__header"
+        >
             <img :src="flower.image" className="cartItem__image">
 
             <div className="cartItem__info">
@@ -42,7 +45,6 @@
     </div>
 </template>
 
-<!-- !Добавить пропс с объектом товара и функцию счета цены-->
 <script setup>
 
 const flower = {
