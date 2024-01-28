@@ -24,7 +24,6 @@ export const useFlowersStore = defineStore('FlowersStore', () => {
         })
     }
 
-    // ! указать параметры
     const addToCart = async (id) => {
         try {
             console.log('here')
@@ -38,6 +37,18 @@ export const useFlowersStore = defineStore('FlowersStore', () => {
     const getCart = async () => {
         try {
             axios.get(`${url}/2/cart`)
+            .then ((res) => {
+                cart.value = res.data;
+        });
+        }
+        catch {
+            alert('Не удалось составить заказ');
+        }
+    }
+
+    const addToStorage = async (data) => {
+        try {
+            axios.post(`${url}/7/warehouse/addProduct`, {data: data})
             .then ((res) => {
                 cart.value = res.data;
         });

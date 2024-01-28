@@ -12,13 +12,9 @@
                 </h2>
 
                 <div className="cartItem__options">
-                    <div className="cartItem__optionsCount">
-                        <img src="/icons/minus.svg" />
-
-                        <span>1</span>
-
-                        <img src="/icons/plus.svg" />
-                    </div>
+                    <span className="cartItem__amount">
+                        Количество: {{ cart[0].amount }}
+                    </span>
 
                     <span className="cartItem__optionsPrice">
                         {{ cart[0].price }} ₽
@@ -91,18 +87,10 @@ const cart = store.cart;
     &__options {
         display: flex;
         justify-content: space-between;
-
-        &Count {
-            font-size: 27px;
-            color: var(--color-dark-text);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+        font-size: 27px;
 
         &Price {
             color: #000;
-            font-size: 27px;
             font-style: normal;
             font-weight: 400;
         }

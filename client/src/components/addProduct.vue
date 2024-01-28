@@ -2,10 +2,8 @@
     <div className="addProduct">
         <input 
             className="addProduct__image inputStyled" 
-            type="file" 
-            name="photo" 
-            placeholder="изображение товара"
-            multiple accept="image/*,image/jpeg"
+            placeholder="Ссылка на изображение товара"
+            v-model="link"
         >
 
         <input 
@@ -22,6 +20,13 @@
         >
 
         <input 
+            className="addProduct__amount amount"
+            type="number"
+            placeholder="Количество"
+            v-model="amount"
+        >
+
+        <input 
             className="addProduct__date inputStyled"
             type="date"
             placeholder="Срок годности"
@@ -34,7 +39,10 @@
             v-model="description" 
         />
 
-        <button className="app_button">
+        <button 
+            className="app_button" 
+            @click="store.addToStorage({image: link, name: name, price: price, shelf_life: date, description: description, amount: amount})"
+        >
             Добавить
         </button>
 
@@ -44,9 +52,14 @@
 
 <script setup>
 import { ref } from 'vue';
+import {useFlowersStore} from '../store/index';
 
+const store = useFlowersStore();
+
+const link = ref('');
 const name = ref('');
 const price = ref();
+const amount = ref();
 const date = ref();
 const description = ref('');
 
@@ -68,7 +81,8 @@ const description = ref('');
     }
 
     &__price,
-    &__date {
+    &__date,
+    &__amount {
         width: 200px;
     }
 

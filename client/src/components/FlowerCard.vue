@@ -15,14 +15,6 @@
             </p>
 
             <div className="flowerCard__options">
-                <div className="flowerCard__optionsCount">
-                    <img src="/icons/minus.svg"/>
-
-                    1
-
-                    <img src="/icons/plus.svg"/>
-                </div>
-
                 <span className="flowerCard__optionsPrice">
                     {{ flower.price }} ₽
                 </span>
@@ -85,7 +77,7 @@ const props = defineProps({
 
     &__options {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
 
         &Price {
             color: #000;

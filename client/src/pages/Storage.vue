@@ -4,9 +4,15 @@
             Склад
         </h2>
 
+        <router-link :to="{ name: 'add' }">
+            <button className="app_button">
+                Добавить на склад
+            </button>
+        </router-link>
+
         <div className="storage__items">
             <div v-for="item in storage" :key="item.id">
-                    <img class="storage__item" :src="item.image" />
+                <img class="storage__item" :src="item.image" />
             </div>
         </div>
     </div>
@@ -19,12 +25,6 @@ import { useFlowersStore } from '../store/index';
 const store = useFlowersStore();
 
 const storage = store.storage;
-
-onMounted(() => {
-    
-})
-
-
 
 </script>
 
