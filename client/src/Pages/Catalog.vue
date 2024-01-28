@@ -41,7 +41,7 @@ const store = useFlowersStore();
 const flowers = store.flowers;
 
 onMounted(() => {
-    // store.loadData();
+    store.loadData();
 })
 
 const searchFlowers = () => {
