@@ -1,10 +1,10 @@
 <template>
-    <div className="cartItem">
+    <div v-if="products" className="cartItem">
         <!--! Добавить цикл для товаров из корзины -->
         <div 
-            :v-for="item in products"
+            v-for="item in products"
             className="cartItem__header"
-        >
+        >   
             <img :src="item.product.image" className="cartItem__image">
 
             <div className="cartItem__info">
@@ -14,11 +14,11 @@
 
                 <div className="cartItem__options">
                     <span className="cartItem__amount">
-                        Количество: {{ item.r.amount }}
+                        Количество: {{ item.r_amount }}
                     </span>
 
                     <span className="cartItem__optionsPrice">
-                        {{ item.r.cost }} ₽
+                        {{ item.r_cost }} ₽
                     </span>
                 </div>
             </div>
@@ -46,10 +46,10 @@
 import { useFlowersStore } from '../store/index';
 
 const store = useFlowersStore();
-const cart = store.cart; 
-const order = cart[0];
-const products = cart.splice(0, 1);
-console.log(products);
+const cart = store.cart;
+const order = cart[0].order;
+const products = cart.splice(1, cart.length)
+
 
 </script>
 
@@ -90,7 +90,7 @@ console.log(products);
 
     &__options {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
         font-size: 27px;
 
         &Price {

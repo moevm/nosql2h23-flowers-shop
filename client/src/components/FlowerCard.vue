@@ -20,9 +20,11 @@
                 </span>
             </div>
 
-            <button className="app_button" @click="store.addToCart(flower.id)">
-                Добавить в корзину
-            </button>
+            <router-link :to="{ name: 'main' }">
+                <button className="app_button" @click="store.addToCart(flower.id)">
+                    Добавить в корзину
+                </button>
+            </router-link>
         </div>
         </div>
 </template>

@@ -1,9 +1,11 @@
 # Инструкция для Linux:
-## Загрузка и запуск бд
+## Загрузка данных БД
 Скачать файл neo4j.dump из папки backend/data, затем выполнить в терминале следующие команды (в данной инструкции команды выполняются из папки $HOME):
 1. mkdir neo4j & mkdir neo4j/backups
 2. sudo mv path/to/neo4j.dump ./neo4j/backups/
 3. docker run --interactive --tty --rm --volume=$HOME/neo4j/data:/data --volume=$HOME/neo4j/backups:/backups neo4j/neo4j-admin:5.16.0 neo4j-admin database load neo4j --from-path=/backups
+
+## Запуск БД
 4. docker run --publish=7474:7474 --publish=7687:7687 --env NEO4J_AUTH=neo4j/my_password --volume=$HOME/neo4j/data:/data neo4j:5.16.0
 
 ## Запуск сервера из папки backend
@@ -13,7 +15,7 @@
 4. python3 app.py
 
 # Инструкция для Windows:
-## Загрузка и запуск бд
+## Загрузка и запуск БД
 1. Скачать файл neo4j.dump из папки backend/data
 2. Добавить этот файл в проект в приложении Neo4j Desktop  
 3. Создать новую БД на основе файла neo4j.dump

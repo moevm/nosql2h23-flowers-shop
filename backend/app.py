@@ -86,14 +86,18 @@ def get_cart(user_id):
     with driver.session() as session: 
 
         query="""MATCH (order:Order {status: 'Оформляется'})-[:IS_CREATED_BY]->(n:User {id: $user_id}), (product:Product)-[r:IS_CONTAINED_IN]->(order)
-        RETURN order, product, r.cost, r.amount"""
+        RETURN order, product, r.cost AS r_cost, r.amount AS r_amount"""
         map={"user_id": user_id}
 
         results=session.run(query, map)
         data = results.data()
         order = [d.pop('order') for d in data]
-        response = [{'order': order[0]}] + data
-        return(json.dumps(response, default=str, ensure_ascii=False).encode('utf8'))
+        if order:
+            response = [{'order': order[0]}] + data
+            return(json.dumps(response, default=str, ensure_ascii=False).encode('utf8'))
+        else:
+            response = {'status': 'failed'}
+            return(json.dumps(response))
 
 
 #создание/изменение заказа
@@ -163,17 +167,17 @@ def get_order(order_id):
 @app.route('/<int:user_id>/cart/update', methods=["GET", "POST"])
 def update_order(user_id):
     with driver.session() as session:
-        data = request.get_json().data()
+        data = request.get_json().get('data')
 
         query="""
         MATCH (o:Order {status: 'Оформляется'})-[:IS_CREATED_BY]->(n:User {id: $user_id})
-        SET o.delivery_address = $delivery_address, o.delivery_apartment = $delivery_apartment, o.delivery_entrance = $delivery_entrance, \
-            o.delivery_floor = $delivery_floor, o.status = 'Оплачен', o.date = Date($date)
+        SET o.delivery_address = $delivery_address, o.delivery_apartment = $delivery_apartment, o.delivery_entrance = $delivery_entrance,
+            o.delivery_floor = $delivery_floor, o.delivery_comment = $delivery_comment, o.status = 'Оплачен', o.date = Date($date)
         RETURN o;
         """
-        map={"user_id": user_id, "delivery_address": data.get('delivery_address'), "delivery_apartment": data.get('delivery_apartment'), \
+        map={"user_id": user_id, "delivery_address": data.get('delivery_address'), "delivery_apartment": data.get('delivery_apartment'),
             "delivery_entrance": data.get('delivery_entrance'), "delivery_floor": data.get('delivery_floor'), \
-                "date": datetime.date.today().strftime("%Y-%m-%d")}
+                "delivery_comment": data.get('delivery_comment'), "date": datetime.date.today().strftime("%Y-%m-%d")}
         
         response = {}
         try:
@@ -182,6 +186,7 @@ def update_order(user_id):
             response['message'] = 'The order was successfully updated'
         except Exception as e:
             response['status'] = 'failed'
+            print(str(e))
             response['message'] = str(e)
         return(json.dumps(response))
 

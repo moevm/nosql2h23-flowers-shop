@@ -45,7 +45,7 @@ const flowers = store.flowers;
 
 const searchFlowers = () => {
     return flowers.filter((flower) =>
-        flower.name.toLowerCase().includes(searchValue.value.toLowerCase()));
+        flower.description.toLowerCase().includes(searchValue.value.toLowerCase()));
 }
 
 

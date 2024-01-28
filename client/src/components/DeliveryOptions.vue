@@ -40,9 +40,12 @@
             v-model="commentsValue"
         />
 
-        <button className="app_button">
-            Оплатить
-        </button>
+        <router-link :to="{ name: 'main' }">
+            <button @click="store.buyProduct({delivery_address: streetValue, delivery_apartment: apartmentValue, delivery_entrance: porchValue, 
+                delivery_floor: floorValue, delivery_comment: commentsValue})" className="app_button">
+                Оплатить
+            </button>
+        </router-link>
 
     </div>
 </template>
@@ -50,6 +53,9 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useFlowersStore } from '../store/index';
+
+const store = useFlowersStore();
 
 let streetValue = ref("");
 let apartmentValue = ref("");

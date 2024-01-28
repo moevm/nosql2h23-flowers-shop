@@ -8,7 +8,7 @@ export const useFlowersStore = defineStore('FlowersStore', () => {
     const flowers = ref();
     const storage = ref();
 
-    const cart = ref([]);
+    const cart = ref();
 
     const loadData = async () => {
         await axios.get(`${url}/catalog`)
@@ -26,7 +26,6 @@ export const useFlowersStore = defineStore('FlowersStore', () => {
 
     const addToCart = async (id) => {
         try {
-            console.log('here')
             axios.post(`${url}/2/changeOrder`, {product_id: Number(id)});
         }
         catch {
@@ -51,9 +50,6 @@ export const useFlowersStore = defineStore('FlowersStore', () => {
     const addToStorage = async (data) => {
         try {
             axios.post(`${url}/7/storage/addProduct`, {data: data})
-            .then ((res) => {
-                cart.value = res.data;
-        });
         }
         catch {
             alert('Не удалось составить заказ');
@@ -63,13 +59,26 @@ export const useFlowersStore = defineStore('FlowersStore', () => {
         loadStorage();
     }
 
+    const buyProduct = async (data) => {
+        try {
+            axios.post(`${url}/2/cart/update`, {data: data});
+        }
+        catch {
+            alert('Не удалось составить заказ');
+        }
+
+        await getCart();
+    }
+
     return {
         flowers,
         loadData,
         storage,
+        cart,
         loadStorage,
         addToCart,
         getCart,
         addToStorage,
+        buyProduct
     }
 })
