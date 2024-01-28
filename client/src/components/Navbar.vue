@@ -12,7 +12,7 @@
                 <li>Каталог</li>
             </router-link>
 
-            <router-link :to="{ name: 'catalog' }">
+            <router-link :to="{ name: 'storage' }">
                 <li>Склад</li>
             </router-link>
 

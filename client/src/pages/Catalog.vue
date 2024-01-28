@@ -33,8 +33,10 @@
 </template>
 
 <script setup>
+
 import { ref } from 'vue';
 import { useFlowersStore } from '../store/index';
+
 
 let searchValue = ref("");
 const store = useFlowersStore();
