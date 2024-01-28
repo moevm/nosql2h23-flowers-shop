@@ -3,52 +3,18 @@ import { defineStore } from "pinia";
 import axios from 'axios';
 
 export const useFlowersStore = defineStore('FlowersStore', () => {
-    const url = '';
-    const flowers = ref([
-        {
-            id: 1,
-            name: 'букет цветочков',
-            price: 2300,
-            image: '/images/slider1.jpg',
-            shelf_life: '',
-            description: 'Описание букета цветочков',
-            amount: 1,
-        },
-        {
-            id: 2,
-            name: 'розы',
-            price: 2300,
-            image: '/images/slider1.jpg',
-            shelf_life: '',
-            description: 'Описание букета цветочков',
-            amount: 1,
-        },
-        {
-            id: 3,
-            name: 'гортензии',
-            price: 2300,
-            image: '/images/slider1.jpg',
-            shelf_life: '',
-            description: 'Описание букета цветочков',
-            amount: 1,
-        },
-        {
-            id: 4,
-            name: 'букет цветочков',
-            price: 2300,
-            image: '/images/slider1.jpg',
-            shelf_life: '',
-            description: 'Описание букета цветочков',
-            amount: 1,
-        }
-    ]);
+    const url = 'http://127.0.0.1:5050';
+    const flowers = ref();
 
     const flower = ref({});
 
     const cart = ref([]);
 
     const loadData = async () => {
-        flowers.value = await axios.get(`${url}/catalog`).data;
+        await axios.get(`${url}/catalog`)
+        .then ((res) => {
+            flowers.value = res.data;
+        })
     }
 
     const getFlower = async (id) => {
