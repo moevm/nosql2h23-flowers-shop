@@ -12,8 +12,7 @@ export const useFlowersStore = defineStore('FlowersStore', () => {
 
     const loadData = async () => {
         await axios.get(`${url}/catalog`)
-        .then ((res) => { 
-            console.log(res.data)
+        .then ((res) => {
             flowers.value = res.data;
         })
     }
