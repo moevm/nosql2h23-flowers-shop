@@ -35,7 +35,7 @@
         </div>
 
         <textarea
-            class="deliveryOptions_comments"
+            class="deliveryOptions__comments inputStyled"
             placeholder="Комментарии"
             v-model="commentsValue"
         />

@@ -7,6 +7,7 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
 

@@ -4,6 +4,7 @@ import MainPage from '../pages/MainPage.vue'
 import Catalog from '../pages/Catalog.vue'
 import Storage from '../pages/Storage.vue'
 import Cart from '../pages/Cart.vue'
+import addProductPage from '../pages/addProductPage.vue'
 import FlowerCard from '../components/FlowerCard.vue'
 
 const routes = [
@@ -25,6 +26,11 @@ const routes = [
 		path: '/storage',
         name: 'storage',
 		component: Storage,
+	},
+    {
+		path: '/add',
+        name: 'add',
+		component: addProductPage,
 	},
     {
 		path: '/catalog/:id',
