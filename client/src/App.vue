@@ -8,12 +8,16 @@
 
 <script setup>
 import { onMounted } from 'vue';
+import { useFlowersStore } from './store/index';
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
+
+const store = useFlowersStore();
 
 onMounted(() => {
     store.loadData();
     store.loadStorage();
+    store.getCart()
 })
 </script>
 

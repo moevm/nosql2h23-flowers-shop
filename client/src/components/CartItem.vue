@@ -4,11 +4,11 @@
         <div 
             className="cartItem__header"
         >
-            <img :src="flower.image" className="cartItem__image">
+            <img :src="cart[0].image" className="cartItem__image">
 
             <div className="cartItem__info">
                 <h2 class="cartItem__title">
-                    {{ flower.name }}
+                    {{ cart[0].name }}
                 </h2>
 
                 <div className="cartItem__options">
@@ -21,7 +21,7 @@
                     </div>
 
                     <span className="cartItem__optionsPrice">
-                        {{ flower.price }} ₽
+                        {{ cart[0].price }} ₽
                     </span>
                 </div>
             </div>
@@ -40,18 +40,16 @@
         <div className="cartItem__cost">
             <span>Общая стоимость</span>
 
-            <span>2300 ₽</span>
+            <span> {{ cart.cost }} </span>
             </div>
     </div>
 </template>
 
 <script setup>
+import { useFlowersStore } from '../store/index';
 
-const flower = {
-    image: '/images/slider1.jpg',
-    name: 'Букет цветочков',
-    price: 2300
-}
+const store = useFlowersStore();
+const cart = store.cart; 
 
 </script>
 

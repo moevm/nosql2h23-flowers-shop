@@ -28,7 +28,7 @@
                 </span>
             </div>
 
-            <button className="app_button">
+            <button className="app_button" @click="store.addToCart(flower.id)">
                 Добавить в корзину
             </button>
         </div>
@@ -44,7 +44,7 @@ const flower = flowers.find(flower => flower.id == props.id);
 
 const props = defineProps({
     id: {
-        type: Number,
+        type: String,
         reqiered: true,
         default: 0
     }
