@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import MainPage from '../pages/MainPage.vue'
 import Catalog from '../pages/Catalog.vue'
+import Storage from '../pages/Storage.vue'
 import Cart from '../pages/Cart.vue'
 import FlowerCard from '../components/FlowerCard.vue'
 
@@ -19,6 +20,11 @@ const routes = [
 		path: '/catalog',
         name: 'catalog',
 		component: Catalog,
+	},
+    {
+		path: '/storage',
+        name: 'storage',
+		component: Storage,
 	},
     {
 		path: '/catalog/:id',

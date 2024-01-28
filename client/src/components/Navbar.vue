@@ -12,6 +12,10 @@
                 <li>Каталог</li>
             </router-link>
 
+            <router-link :to="{ name: 'catalog' }">
+                <li>Склад</li>
+            </router-link>
+
             <li>Контакты</li>
             <li>О компании</li>
         </ul>

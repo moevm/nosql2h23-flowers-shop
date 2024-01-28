@@ -4,9 +4,9 @@ import axios from 'axios';
 
 export const useFlowersStore = defineStore('FlowersStore', () => {
     const url = 'http://127.0.0.1:5050';
-    const flowers = ref();
 
-    const flower = ref({});
+    const flowers = ref();
+    const storage = ref();
 
     const cart = ref([]);
 
@@ -17,8 +17,11 @@ export const useFlowersStore = defineStore('FlowersStore', () => {
         })
     }
 
-    const getFlower = async (id) => {
-        flower.value = await axios.get(`${url}/catalog/${id}`, id).data;
+    const loadSorage = async () => {
+        await axios.get(`${url}/1/warehouse`)
+        .then ((res) => {
+            storage.value = res.data;
+        })
     }
 
     // ! указать параметры

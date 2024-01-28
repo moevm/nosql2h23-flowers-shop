@@ -9,6 +9,11 @@
 <script setup>
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
+
+onMounted(() => {
+    store.loadData();
+    store.loadStorage();
+})
 </script>
 
 <style scoped>

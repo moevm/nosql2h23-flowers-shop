@@ -33,16 +33,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useFlowersStore } from '../store/index';
 
 let searchValue = ref("");
 const store = useFlowersStore();
 const flowers = store.flowers;
 
-onMounted(() => {
-    store.loadData();
-})
 
 const searchFlowers = () => {
     return flowers.filter((flower) =>
