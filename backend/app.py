@@ -19,7 +19,10 @@ def get_last_id(label):
 
         results=session.run(query, map)
         data = [data['ID'] for data in results.data()]
-        return data[0]
+        if data[0]:
+            return data[0]
+        else:
+            return 0
 
 #просмотр каталога
 @app.route("/catalog", methods=["GET"])
@@ -36,8 +39,8 @@ def get_catalog():
     
 
 #просмотр склада продавца
-@app.route("/<int:user_id>/warehouse", methods=["GET"])     
-def get_warehouse(user_id):
+@app.route("/<int:user_id>/storage", methods=["GET"])     
+def get_storage(user_id):
     with driver.session() as session: 
 
         query="""MATCH (n:User {id: $user_id})-[:IS_SELLER_OF]->(m) WHERE m.shelf_life > Date($date) RETURN m"""
@@ -50,20 +53,21 @@ def get_warehouse(user_id):
 
 
 #добавление продукта на склад
-@app.route("/<int:user_id>/warehouse/addProduct", methods=["GET", "POST"])
+@app.route("/<int:user_id>/storage/addProduct", methods=["GET", "POST"])
 def addProduct(user_id):
     with driver.session() as session:
         product_id = 1 + get_last_id('Product')
-        data = request.get_json()
+        data = request.get_json().get('data')
 
         query = """
         MATCH (n:User {id: $user_id, role: 'Продавец'})
-        CREATE (n)-[:IS_SELLER_OF]->(product:Product {id: toInteger($product_id), name: $name, image: $image,\
-            price: toFloat($price), shelf_life: Date($shelf_life), description: $description, amount: toInteger($amount)});
+        MERGE (n)-[:IS_SELLER_OF]->(product:Product {name: $name, image: $image,\
+            price: toInteger($price), shelf_life: Date($shelf_life), description: $description})
+        ON CREATE SET product.id = toInteger($product_id), product.amount = toInteger($amount);
         """
 
         map={"user_id": user_id, "product_id": product_id, "name": data.get('name'), "image": data.get('image'),\
-            "price": data.get('price'), "shelf_life": data.get('shelf_life'), "description": data.get('dedscription'), "amount": data.get('amount')}
+            "price": data.get('price'), "shelf_life": data.get('shelf_life'), "description": data.get('description'), "amount": data.get('amount')}
 
         response = {}
         try:
@@ -81,12 +85,14 @@ def addProduct(user_id):
 def get_cart(user_id):
     with driver.session() as session: 
 
-        query="""MATCH (m:Order {status: 'Оформляется'})-[:IS_CREATED_BY]->(n:User {id: $user_id}) RETURN m"""
-
+        query="""MATCH (order:Order {status: 'Оформляется'})-[:IS_CREATED_BY]->(n:User {id: $user_id}), (product:Product)-[r:IS_CONTAINED_IN]->(order)
+        RETURN order, product, r.cost, r.amount"""
         map={"user_id": user_id}
 
         results=session.run(query, map)
-        response=[data['m'] for data in results.data()] 
+        data = results.data()
+        order = [d.pop('order') for d in data]
+        response = [{'order': order[0]}] + data
         return(json.dumps(response, default=str, ensure_ascii=False).encode('utf8'))
 
 
@@ -98,13 +104,13 @@ def change_order(user_id):
         data = request.get_json()
 
         change_order_query = """
-        MATCH (m:User {id: $user_id}), (p:Product {id: $product_id})
+        MATCH (m:User {id: $user_id}), (p:Product {id: toInteger($product_id)})
         MERGE (o:Order {status: 'Оформляется'})-[:IS_CREATED_BY]->(m)
         ON CREATE SET o.id = toInteger($order_id), o.cost = 0, o.date = Date($date)
         ON MATCH SET o.date = Date($date)
         MERGE (p)-[r:IS_CONTAINED_IN]->(o)
         ON CREATE SET r.amount = toInteger("1"), r.cost = p.price
-        ON MATCH SET r.amount = r.amount + 1, r.cost = r.amount * p.price;
+        ON MATCH SET r.amount = r.amount + 1, r.cost = r.cost + p.price;
         """
 
         change_cost_query = """
@@ -157,7 +163,7 @@ def get_order(order_id):
 @app.route('/<int:user_id>/cart/update', methods=["GET", "POST"])
 def update_order(user_id):
     with driver.session() as session:
-        data = request.get_json()
+        data = request.get_json().data()
 
         query="""
         MATCH (o:Order {status: 'Оформляется'})-[:IS_CREATED_BY]->(n:User {id: $user_id})
