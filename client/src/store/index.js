@@ -18,7 +18,7 @@ export const useFlowersStore = defineStore('FlowersStore', () => {
     }
 
     const loadStorage = async () => {
-        await axios.get(`${url}/7/warehouse`)
+        await axios.get(`${url}/7/storage`)
         .then ((res) => {
             storage.value = res.data;
         })
@@ -48,7 +48,7 @@ export const useFlowersStore = defineStore('FlowersStore', () => {
 
     const addToStorage = async (data) => {
         try {
-            axios.post(`${url}/7/warehouse/addProduct`, {data: data})
+            axios.post(`${url}/7/storage/addProduct`, {data: data})
             .then ((res) => {
                 cart.value = res.data;
         });
@@ -56,6 +56,9 @@ export const useFlowersStore = defineStore('FlowersStore', () => {
         catch {
             alert('Не удалось составить заказ');
         }
+
+        loadData();
+        loadStorage();
     }
 
     return {
@@ -64,6 +67,7 @@ export const useFlowersStore = defineStore('FlowersStore', () => {
         storage,
         loadStorage,
         addToCart,
-        getCart
+        getCart,
+        addToStorage,
     }
 })

@@ -20,7 +20,7 @@
         >
 
         <input 
-            className="addProduct__amount amount"
+            className="addProduct__amount inputStyled"
             type="number"
             placeholder="Количество"
             v-model="amount"
