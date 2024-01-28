@@ -39,13 +39,14 @@
             v-model="description" 
         />
 
-        <button 
-            className="app_button" 
-            @click="store.addToStorage({image: link, name: name, price: price, shelf_life: date, description: description, amount: amount})"
-        >
-            Добавить
-        </button>
-
+        <router-link :to="{ name: 'storage' }">
+            <button 
+                className="app_button" 
+                @click="store.addToStorage({ image: link, name: name, price: price, shelf_life: date, description: description, amount: amount })"
+            >
+                Добавить
+            </button>
+        </router-link>
     </div>
 </template>
 

@@ -32,6 +32,8 @@ export const useFlowersStore = defineStore('FlowersStore', () => {
         catch {
             alert('Не удалось составить заказ');
         }
+
+        getCart();
     }
 
     const getCart = async () => {
